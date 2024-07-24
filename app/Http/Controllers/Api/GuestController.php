@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateGuestRequest;
 use App\Http\Resources\GuestResource;
 use App\Models\Guest;
 use App\Models\User;
+use App\Service\PhoneCountryService;
 use Illuminate\Http\Request;
 use libphonenumber\geocoding\PhoneNumberOfflineGeocoder;
 use libphonenumber\PhoneNumberUtil;
@@ -78,11 +79,11 @@ class GuestController extends Controller
     {
         $guestData = $request->validated();
 
-        $geoCoder = PhoneNumberOfflineGeocoder::getInstance();
+        $geoCoder = PhoneCountryService::getInstance();
         $util = PhoneNumberUtil::getInstance();
         $numberProto = $util->parse('+'.$guestData['phone'], '');
 
-        $guestData['country'] = $guestData['country'] ?? $geoCoder->getDescriptionForNumber($numberProto, 'En');
+        $guestData['country'] = $guestData['country'] ?? $geoCoder->getCountryByNumber($numberProto, 'En');
 
         return new GuestResource(Guest::create($guestData));
     }
