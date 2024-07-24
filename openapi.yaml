@@ -1,0 +1,109 @@
+openapi: 3.0.0
+info:
+  title: 'Api documentation'
+  description: 'Api documentation'
+  contact:
+    email: support@example.com
+  version: '3.0'
+paths:
+  /api/guests:
+    get:
+      tags:
+        - Guests
+      summary: 'Method for checking list of guests'
+      operationId: 56cc8fe33a100159d774722901ae37e8
+      responses:
+        '200':
+          description: 'Get list of guests'
+          content:
+            application/json:
+              schema:
+                properties:
+                  data: { type: array, items: { properties: { id: { type: integer, example: '1' }, firstname: { type: string, example: Alexey }, lastname: { type: string, example: Dmitriev }, phone: { type: string, example: '79999999999' }, email: { type: string, example: alexey.dmitriev.2000@gmail.com }, country: { type: string, example: Russia }, created_at: { type: string, format: date-time, example: '2024-07-24T15:56:56.000000Z' }, updated_at: { type: string, format: date-time, example: '2024-07-24T15:56:56.000000Z' } }, type: object } }
+                type: object
+    post:
+      tags:
+        - Guests
+      summary: 'Method for creating info about guest'
+      operationId: fdd5f9480881a2a661a4f046bc1f75f7
+      responses:
+        '201':
+          description: 'Creating info about guest'
+          content:
+            application/json:
+              schema:
+                properties:
+                  data: { description: 'info about created guest', properties: { id: { type: integer, example: '1' }, firstname: { type: string, example: Alexey }, lastname: { type: string, example: Dmitriev }, phone: { type: string, example: '79999999999' }, email: { type: string, example: alexey.dmitriev.2000@gmail.com }, country: { type: string, example: Russia }, created_at: { type: string, format: date-time, example: '2024-07-24T15:56:56.000000Z' }, updated_at: { type: string, format: date-time, example: '2024-07-24T15:56:56.000000Z' } }, type: object }
+                type: object
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+  '/api/guests/{id}':
+    get:
+      tags:
+        - Guests
+      summary: 'Method for checking info about guest'
+      operationId: 4267610a6a43088364913e1b6071b25d
+      responses:
+        '200':
+          description: 'Get info about guest'
+          content:
+            application/json:
+              schema:
+                properties:
+                  data: { description: 'info about guest', properties: { id: { type: integer, example: '1' }, firstname: { type: string, example: Alexey }, lastname: { type: string, example: Dmitriev }, phone: { type: string, example: '79999999999' }, email: { type: string, example: alexey.dmitriev.2000@gmail.com }, country: { type: string, example: Russia }, created_at: { type: string, format: date-time, example: '2024-07-24T15:56:56.000000Z' }, updated_at: { type: string, format: date-time, example: '2024-07-24T15:56:56.000000Z' } }, type: object }
+                type: object
+        '404':
+          $ref: '#/components/responses/404'
+    delete:
+      tags:
+        - Guests
+      summary: 'Method for deleting info about guest'
+      operationId: 627107a5c10ad7a3877e6ca545859ca8
+      responses:
+        '204':
+          description: 'No content(Info about guest was deleted)'
+        '404':
+          $ref: '#/components/responses/404'
+    patch:
+      tags:
+        - Guests
+      summary: 'Method for updating info about guest'
+      operationId: 58bfc51fe7c4244916f3e7845c60676e
+      responses:
+        '200':
+          description: 'Update info about guest'
+          content:
+            application/json:
+              schema:
+                properties:
+                  data: { description: 'info about updated guest', properties: { id: { type: integer, example: '1' }, firstname: { type: string, example: Alexey }, lastname: { type: string, example: Dmitriev }, phone: { type: string, example: '79999999999' }, email: { type: string, example: alexey.dmitriev.2000@gmail.com }, country: { type: string, example: Russia }, created_at: { type: string, format: date-time, example: '2024-07-24T15:56:56.000000Z' }, updated_at: { type: string, format: date-time, example: '2024-07-24T15:56:56.000000Z' } }, type: object }
+                type: object
+        '404':
+          $ref: '#/components/responses/404'
+        '422':
+          $ref: '#/components/responses/422'
+components:
+  responses:
+    '404':
+      description: 'Not Found'
+    '422':
+      description: 'Unprocessable Content'
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                type: string
+                example: 'The given data was invalid.'
+              errors:
+                description: 'array of validation errors'
+                properties:
+                  field: { type: array, items: { type: string, example: 'description of error' } }
+                type: object
+            type: object
+tags:
+  -
+    name: Guests
+    description: 'Methods of guests'

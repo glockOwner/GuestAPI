@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+    guest-nginx:
+        image: nginx:stable-alpine
+        depends_on:
+            - php
+        volumes:
+            - ./nginx/conf:/etc/nginx/conf.d/
+            - ./:/var/www/guest-service
+        ports:
+            - "8072:80"
+    php:
+        build: .
+        container_name: php
+        volumes:
+            - ./:/var/www/guest-service
+        depends_on:
+            - guest-mysql
+    guest-mysql:
+        restart: always
+        container_name: guest-mysql
+        image: mysql:latest
+        ports:
+            - "3311:3306"
+        environment:
+            - MYSQL_DATABASE=guests
+            - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+        volumes:
+            - ./db-data:/var/lib/mysql
